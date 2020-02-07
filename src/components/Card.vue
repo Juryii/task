@@ -1,11 +1,22 @@
 <template>
   <div class="container">
-    <div class="column" v-for="column in colunms">
+    <div class="column" v-for="(column, index) in columns">
       <div class="cardName">
         <h3>{{ column.title }}</h3>
       </div>
       <div class="CardItem" v-for="columnitem in column.CardItems">
         <p>{{columnitem.title}}</p>
+      </div>
+      <div v-if="flagInputCard === ''">
+        <button @click="flagInputCard = index">Добавить еще одну карточку</button>
+      </div>
+      <div v-else-if="flagInputCard === index">
+        <input
+          type="text"
+          placeholder="Введите заголовок для этой карточки"
+          v-model="inputCardItem"
+        > <br>
+        <button @click="addNewCardItem(index)">Добавить</button>
       </div>
     </div>
     <div v-if="!newColumninput">
@@ -31,7 +42,9 @@
       return {
         newColumninput: false,
         newColumnTitle: '',
-        colunms: [
+        inputCardItem: '',
+        flagInputCard: '',
+        columns: [
           {
             title: '\'Список дел\'',
             CardItems: [
@@ -39,6 +52,7 @@
               {title: 'title 3', description: 'text description 3'},
               {title: 'title 1', description: 'text description 1'}
             ]
+
           },
           {
             title: '\'В процессе\'',
@@ -61,12 +75,28 @@
     },
     methods: {
       addNewColumn(title){
-        if(title == '' || title == null){
+        if(title === '' || title == null){
           alert('Введите название колонки');
         } else {
-          this.colunms.push( {title: title} );
+          this.columns.push( {title: title} );
           this.newColumnTitle = '';
           this.newColumninput = false
+        }
+      },
+      addNewCardItem(index) {
+        if(this.inputCardItem === '') {
+          alert('Введите заголовок списка')
+        }
+        else {
+          if (typeof this.columns[index].CardItems !== "undefined") {
+            //ключ есть
+            this.columns[index].CardItems.push({title: this.inputCardItem});
+          }else{
+            //ключа нет
+            this.columns[index].CardItems = [{title: this.inputCardItem}];
+          }
+          this.inputCardItem = '';
+          this.flagInputCard = ''
         }
 
       }
