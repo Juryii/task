@@ -2,10 +2,37 @@
   <div class="container">
     <div class="column" v-for="(column, index) in columns">
       <div class="cardName">
-        <h3>{{ column.title }}</h3>
+        <div class="cardNameTitle" v-if="flagEditColumntitle !== index">
+          <h3>{{ column.title }}</h3>
+          <i
+            class="fas fa-pen"
+            @click="flagEditColumntitle = index"
+          ></i>
+        </div>
+        <div v-else>
+          <textarea
+            cols="30" rows="1"
+            autofocus
+            @blur="editCards('title')"
+            v-model="column.title"
+          >{{column.title}}</textarea>
+        </div>
+
       </div>
-      <div class="CardItem" v-for="columnitem in column.CardItems">
-        <p>{{columnitem.title}}</p>
+      <div class="CardItem" v-for="(columnitem, index) in column.CardItems">
+        <div  v-if="flagEditItem === index">
+          <input
+            type="text"
+            autofocus
+            v-model="columnitem.title"
+            @blur="editCards('item')"
+          >
+        </div>
+        <div class="cardNameItem" v-else>
+          <p>{{columnitem.title}}</p>
+          <i class="fas fa-pen" @click="flagEditItem = index"></i>
+        </div>
+
       </div>
       <div v-if="flagInputCard === ''">
         <button @click="flagInputCard = index">Добавить еще одну карточку</button>
@@ -44,6 +71,8 @@
         newColumnTitle: '',
         inputCardItem: '',
         flagInputCard: '',
+        flagEditColumntitle: '',
+        flagEditItem: '',
         columns: []
       }
     },
@@ -84,6 +113,17 @@
 
         }
 
+      },
+      editCards(elem){
+        console.log('onblur');
+        localStorage.setObj('columns', this.columns);
+        if(elem === 'title'){
+          this.flagEditColumntitle = '';
+        }
+        else if(elem === 'item'){
+          this.flagEditItem = '';
+        }
+
       }
     }
 
@@ -105,5 +145,18 @@
   .CardItem{
     background-color: #fff;
     border-radius: 20px;
+  }
+  .cardNameItem:hover, .cardNameTitle:hover{
+    cursor: pointer;
+  }
+  .fa-pen:hover{
+    color: #2a84c3;
+    font-size: 1.4em;
+  }
+  
+  .cardNameTitle, .cardNameItem{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 </style>
