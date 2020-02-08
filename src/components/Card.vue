@@ -32,10 +32,10 @@
     </div>
   </div>
 
-
 </template>
 
 <script>
+
   export default {
     name: "Card",
     data: function () {
@@ -44,43 +44,26 @@
         newColumnTitle: '',
         inputCardItem: '',
         flagInputCard: '',
-        columns: [
-          {
-            title: '\'Список дел\'',
-            CardItems: [
-              {title: 'title 2', description: 'text description 2'},
-              {title: 'title 3', description: 'text description 3'},
-              {title: 'title 1', description: 'text description 1'}
-            ]
-
-          },
-          {
-            title: '\'В процессе\'',
-            CardItems: [
-              {title: 'title 2', description: 'text description 2'},
-              {title: 'title 3', description: 'text description 3'},
-              {title: 'title 1', description: 'text description 1'}
-            ]
-          },
-          {
-            title: '\'готово\'',
-            CardItems: [
-              {title: 'title 2', description: 'text description 2'},
-              {title: 'title 3', description: 'text description 3'},
-              {title: 'title 1', description: 'text description 1'}
-            ]
-          },
-        ],
+        columns: []
+      }
+    },
+    mounted: function () {
+      if (localStorage.getObj('columns') !== null ) {
+        this.columns = localStorage.getObj('columns');
+      } else {
+        localStorage.setObj('columns', []);
       }
     },
     methods: {
       addNewColumn(title){
         if(title === '' || title == null){
           alert('Введите название колонки');
-        } else {
+        }
+        else {
           this.columns.push( {title: title} );
+          localStorage.setObj('columns', this.columns);
           this.newColumnTitle = '';
-          this.newColumninput = false
+          this.newColumninput = false;
         }
       },
       addNewCardItem(index) {
@@ -90,13 +73,15 @@
         else {
           if (typeof this.columns[index].CardItems !== "undefined") {
             //ключ есть
-            this.columns[index].CardItems.push({title: this.inputCardItem});
+            this.columns[index].CardItems.push( { title: this.inputCardItem } );
           }else{
             //ключа нет
             this.columns[index].CardItems = [{title: this.inputCardItem}];
           }
+          localStorage.setObj('columns', this.columns);
           this.inputCardItem = '';
           this.flagInputCard = ''
+
         }
 
       }
