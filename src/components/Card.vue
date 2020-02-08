@@ -4,10 +4,16 @@
       <div class="cardName">
         <div class="cardNameTitle" v-if="flagEditColumntitle !== index">
           <h3>{{ column.title }}</h3>
-          <i
-            class="fas fa-pen"
-            @click="flagEditColumntitle = index"
-          ></i>
+          <div>
+            <i
+              class="fas fa-pen"
+              @click="flagEditColumntitle = index"
+            ></i>
+            <i
+              class="fas fa-times"
+              @click="deleteElement('column', index)"
+            ></i>
+          </div>
         </div>
         <div v-else>
           <textarea
@@ -19,8 +25,8 @@
         </div>
 
       </div>
-      <div class="CardItem" v-for="(columnitem, index) in column.CardItems">
-        <div  v-if="flagEditItem === index">
+      <div class="CardItem" v-for="(columnitem, key) in column.CardItems">
+        <div  v-if="flagEditItem[0] === key && flagEditItem[1] === index">
           <input
             type="text"
             autofocus
@@ -30,20 +36,27 @@
         </div>
         <div class="cardNameItem" v-else>
           <p>{{columnitem.title}}</p>
-          <i class="fas fa-pen" @click="flagEditItem = index"></i>
+          <div>
+            <i class="fas fa-pen" @click="flagEditItem = [key, index]"></i>
+            <i
+              class="fas fa-times"
+              @click="deleteElement('item', key, column)"
+            ></i>
+          </div>
         </div>
 
       </div>
-      <div v-if="flagInputCard === ''">
-        <button @click="flagInputCard = index">Добавить еще одну карточку</button>
-      </div>
-      <div v-else-if="flagInputCard === index">
+
+      <div v-if="flagInputCard === index">
         <input
           type="text"
           placeholder="Введите заголовок для этой карточки"
           v-model="inputCardItem"
         > <br>
         <button @click="addNewCardItem(index)">Добавить</button>
+      </div>
+      <div v-else>
+      <button @click="flagInputCard = index">Добавить еще одну карточку</button>
       </div>
     </div>
     <div v-if="!newColumninput">
@@ -124,6 +137,17 @@
           this.flagEditItem = '';
         }
 
+      },
+      deleteElement(name, elem, column=''){
+        if(name === 'column'){
+          this.columns.splice(elem, 1);
+        }
+        else if(name === 'item'){
+          //FIXME через некоторое время перестает отрисовывать новый массив
+          let columnDel = this.columns.indexOf(column);
+          this.columns[columnDel].CardItems.splice(elem, 1);
+        }
+        localStorage.setObj('columns', this.columns);
       }
     }
 
@@ -149,7 +173,10 @@
   .cardNameItem:hover, .cardNameTitle:hover{
     cursor: pointer;
   }
-  .fa-pen:hover{
+  .fas{
+    margin-right: 0.8rem;
+  }
+  .fas:hover{
     color: #2a84c3;
     font-size: 1.4em;
   }
