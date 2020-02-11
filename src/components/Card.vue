@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="column" v-for="(column, index) in columns">
+    <div class="column" v-for="(column, index) in columns" :key="index">
       <div class="cardName">
         <div class="cardNameTitle" v-if="flagEditColumntitle !== index">
           <h3>{{ column.title }}</h3>
@@ -10,12 +10,10 @@
           </div>
         </div>
         <div v-else>
-          <textarea cols="30" rows="1" autofocus @blur="editCards('title')" v-model="column.title">{{
-            column.title
-          }}</textarea>
+          <textarea cols="30" rows="1" autofocus @blur="editCards('title')" v-model="column.title"> </textarea>
         </div>
       </div>
-      <div class="CardItem" v-for="(columnitem, key) in column.CardItems">
+      <div class="CardItem" v-for="(columnitem, key) in column.CardItems" :key="key">
         <div v-if="flagEditItem[0] === key && flagEditItem[1] === index">
           <input type="text" autofocus v-model="columnitem.title" @blur="editCards('item')" />
         </div>
@@ -69,14 +67,15 @@ export default {
   },
   methods: {
     addNewColumn(title) {
-      if (title === "" || title == null) {
+      if (!title) {
         alert("Введите название колонки");
-      } else {
-        this.columns.push({ title: title });
-        localStorage.setObj("columns", this.columns);
-        this.newColumnTitle = "";
-        this.newColumninput = false;
+        return;
       }
+
+      this.columns.push({ title: title });
+      localStorage.setObj("columns", this.columns);
+      this.newColumnTitle = "";
+      this.newColumninput = false;
     },
     addNewCardItem(index) {
       if (this.inputCardItem === "") {

@@ -20,8 +20,6 @@
 
 <script>
 import { setObj, getObj } from "@/utils/localStorage";
-// @ is an alias to /src
-import Card from "@/components/Card";
 import Column from "@/components/Column";
 import NewColumn from "@/components/NewColumn";
 
