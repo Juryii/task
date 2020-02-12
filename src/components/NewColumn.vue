@@ -4,7 +4,6 @@
   </div>
   <div class="addNewColumn" v-else>
     <v-text-field label="Ввести заголовок списка" v-model="newColumnTitle"></v-text-field>
-<!--    <v-input type="text" placeholder="Ввести заголовок списка" v-model="newColumnTitle" />-->
     <v-btn @click="addNewColumn">Добавить</v-btn>
   </div>
 </template>

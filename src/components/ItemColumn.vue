@@ -2,9 +2,8 @@
   <v-list>
     <div v-if="flagEditItem[0] === itemIndex && flagEditItem[1] === columnIndex">
       <v-text-field v-model="newInputItemTitle" @blur="onBlur"></v-text-field>
-<!--      <v-input type="text" autofocus v-model="newInputItemTitle" @blur="onBlur" />-->
     </div>
-    <v-list-item class="cardNameItem"  v-else>
+    <v-list-item class="cardNameItem" v-else>
       <v-list-item-title>{{ newInputItemTitle }}</v-list-item-title>
       <v-list-item-icon class="icons">
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
@@ -40,15 +39,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/*.cardNameItem {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-around;*/
-/*}*/
-/*.Item:hover {*/
-/*  cursor: pointer;*/
-/*  background-color: #fff;*/
-/*  border-radius: 5px;*/
-/*}*/
-</style>
+<style scoped></style>

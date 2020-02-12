@@ -64,18 +64,7 @@ export default {
 };
 </script>
 <style scoped>
-  .home{
-    overflow-x: scroll;
-  }
-/*.container {*/
-/*  display: block;*/
-/*  flex-direction: row;*/
-/*  flex-wrap: nowrap;*/
-/*}*/
-/*.column {*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  margin-left: 50px;*/
-/*  width: 400px;*/
-/*}*/
+.home {
+  overflow-x: scroll;
+}
 </style>

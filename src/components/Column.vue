@@ -1,19 +1,13 @@
 <template>
-  <v-card
-    class="row ma-5"
-    max-width="300"
-    tile
-  >
+  <v-card class="row ma-5" max-width="300" tile>
     <div flat class="cardName">
       <div class="row justify-center align-center" v-if="flagEditColumntitle !== columnIndex">
         <v-card-title>{{ column.title }}</v-card-title>
-
-          <i class="fas fa-pen" @click="flagEditColumntitle = columnIndex"></i>
-          <i class="fas fa-times" @click="deleteColumn"></i>
+        <i class="fas fa-pen" @click="flagEditColumntitle = columnIndex"></i>
+        <i class="fas fa-times" @click="deleteColumn"></i>
       </div>
       <div v-else>
         <v-text-field v-model="newColumnTitle" autofocus @blur="onBlur"></v-text-field>
-<!--        <v-input type="text" v-model="newColumnTitle" autofocus @blur="onBlur" />-->
       </div>
     </div>
     <ItemColumn
@@ -28,7 +22,6 @@
 
     <div v-if="flagInputCard === columnIndex">
       <v-text-field label="Введите заголовок для этой карточки" v-model="inputCardItem"></v-text-field>
-<!--      <v-input type="text" placeholder="Введите заголовок для этой карточки" v-model="inputCardItem" /> <br />-->
       <v-btn @click="addNewCardItem">Добавить</v-btn>
     </div>
     <div v-else>
@@ -108,22 +101,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/*.CardItem {*/
-/*  min-width: 400px;*/
-/*  margin-top: 25px;*/
-/*  border: 1px solid black;*/
-/*  width: 200px;*/
-/*  border-radius: 10px;*/
-/*  background-color: #9d9d9e;*/
-/*  margin-right: 20px;*/
-/*}*/
-/*.cardNameTitle {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-around;*/
-/*}*/
-/*.cardName {*/
-/*  border-bottom: 1px solid black;*/
-/*}*/
-</style>
+<style scoped></style>
