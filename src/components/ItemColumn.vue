@@ -29,7 +29,7 @@ export default {
         alert("Поле не может быть пустым");
         return;
       }
-      this.$emit("editElementTitle", this.newInputItemTitle, this.itemIndex, this.columnIndex);
+      this.$emit("editElementTitle", this.newInputItemTitle, this.itemIndex);
       this.flagEditItem = "";
     },
     deleteElement() {

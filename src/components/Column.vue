@@ -2,14 +2,14 @@
   <div class="CardItem">
     <div class="cardName">
       <div class="cardNameTitle" v-if="flagEditColumntitle !== columnIndex">
-        <h3>{{ columnTitle }}</h3>
+        <h3>{{ column.title }}</h3>
         <div>
           <i class="fas fa-pen" @click="flagEditColumntitle = columnIndex"></i>
-          <i class="fas fa-times" @click="deleteElement(columnIndex)"></i>
+          <i class="fas fa-times" @click="deleteColumn"></i>
         </div>
       </div>
       <div v-else>
-        <textarea v-model="newColumnTitle" cols="30" rows="1" autofocus @blur="onBlur(columnIndex)"></textarea>
+        <input type="text" v-model="newColumnTitle" autofocus @blur="onBlur" />
       </div>
     </div>
     <ItemColumn
@@ -21,31 +21,10 @@
       @editElementTitle="editElementTitle"
       @deleteItemColumn="deleteItemColumn"
     ></ItemColumn>
-    <!--        <div class="CardItem" v-for="(columnitem, key) in column.CardItems">-->
-    <!--          <div  v-if="flagEditItem[0] === key && flagEditItem[1] === columnIndex">-->
-    <!--            <input-->
-    <!--              type="text"-->
-    <!--              autofocus-->
-    <!--              v-model="columnitem.title"-->
-    <!--              @blur="editCards('item')"-->
-    <!--            >-->
-    <!--          </div>-->
-    <!--          <div class="cardNameItem" v-else>-->
-    <!--            <p>{{columnTitle}}</p>-->
-    <!--            <div>-->
-    <!--              <i class="fas fa-pen" @click="flagEditItem = [key, columnIndex]"></i>-->
-    <!--              <i-->
-    <!--                class="fas fa-times"-->
-    <!--                @click="deleteElement('item', key, column)"-->
-    <!--              ></i>-->
-    <!--            </div>-->
-    <!--          </div>-->
-
-    <!--        </div>-->
 
     <div v-if="flagInputCard === columnIndex">
       <input type="text" placeholder="Введите заголовок для этой карточки" v-model="inputCardItem" /> <br />
-      <button @click="addNewCardItem(columnIndex)">Добавить</button>
+      <button @click="addNewCardItem">Добавить</button>
     </div>
     <div v-else>
       <button @click="flagInputCard = columnIndex">Добавить еще одну карточку</button>
@@ -57,39 +36,66 @@
 import ItemColumn from "./ItemColumn";
 export default {
   name: "Column",
-  props: ["columnTitle", "columnIndex", "cardItems"],
-  data: function() {
+  components: {
+    ItemColumn
+  },
+  props: {
+    columnTitle: {
+      type: String,
+      required: true
+    },
+    columnIndex: {
+      type: Number,
+      required: true
+    },
+    cardItems: {
+      type: Array,
+      default: () => []
+    }
+  },
+  data() {
     return {
       newColumninput: false,
       newColumnTitle: this.columnTitle,
       inputCardItem: "",
       flagInputCard: "",
-      flagEditColumntitle: ""
+      flagEditColumntitle: "",
+      column: { title: this.columnTitle, cardItems: this.cardItems }
     };
   },
-  components: {
-    ItemColumn
+  watch: {
+    columnTitle(value) {
+      this.column.title = value;
+    }
   },
   methods: {
-    onBlur(columnIndex) {
-      this.$emit("editColumnTitle", { title: this.newColumnTitle, index: columnIndex });
+    updateColumn(action) {
+      this.$emit("updateColumn", { index: this.columnIndex, column: this.column, action: action });
+    },
+    deleteColumn() {
+      this.updateColumn("deleteColumn");
+    },
+    onBlur() {
+      this.column.title = this.newColumnTitle;
+      this.updateColumn("update");
       this.flagEditColumntitle = "";
     },
-    deleteElement(columnIndex) {
-      this.$emit("deleteColumn", { index: columnIndex });
+
+    editElementTitle(newTitle, itemIndex) {
+      this.column.cardItems[itemIndex].title = newTitle;
+      this.updateColumn("update");
     },
-    editElementTitle(title, itemIndex, columnIndex) {
-      this.$emit("editElementTitle", title, itemIndex, columnIndex);
+    deleteItemColumn(itemIndex) {
+      this.column.cardItems.splice(itemIndex, 1);
+      this.updateColumn("update");
     },
-    deleteItemColumn(itemIndex, columnIndex) {
-      this.$emit("deleteItemColumn", itemIndex, columnIndex);
-    },
-    addNewCardItem(columnIndex) {
+    addNewCardItem() {
       if (!this.inputCardItem) {
         alert("поле не может быть пустым");
         return;
       }
-      this.$emit("addNewCardItem", { index: columnIndex, title: this.inputCardItem });
+      this.column.cardItems.push({ title: this.inputCardItem });
+      this.updateColumn("update");
       this.inputCardItem = "";
       this.flagInputCard = "";
     }

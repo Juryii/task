@@ -7,11 +7,7 @@
         :columnIndex="index"
         :key="index"
         :cardItems="column.cardItems"
-        @editColumnTitle="editColumnTitle"
-        @deleteColumn="deleteColumn"
-        @editElementTitle="editElementTitle"
-        @deleteItemColumn="deleteItemColumn"
-        @addNewCardItem="addNewCardItem"
+        @updateColumn="updateColumn"
       ></Column>
       <NewColumn @addNewColumn="addNewColumn"></NewColumn>
     </div>
@@ -42,27 +38,18 @@ export default {
     NewColumn
   },
   methods: {
-    editColumnTitle(columnTitle) {
-      this.columns[columnTitle.index].title = columnTitle.title;
-      this.updateStorage();
-    },
-    deleteColumn(index) {
-      this.columns.splice(index, 1);
-      this.updateStorage();
-    },
-    editElementTitle(title, itemIndex, columnIndex) {
-      this.columns[columnIndex].cardItems[itemIndex].title = title;
-      this.updateStorage();
-    },
-    deleteItemColumn(itemIndex, columnIndex) {
-      this.columns[columnIndex].cardItems.splice(itemIndex, 1);
-      this.updateStorage();
-    },
-    addNewCardItem(args) {
-      if (this.columns[args.index].cardItems) {
-        this.columns[args.index].cardItems.push({ title: args.title });
-      } else {
-        this.columns[args.index].cardItems = [{ title: args.title }];
+    updateColumn(args) {
+      switch (args.action) {
+        case "update": {
+          console.log(this.columns);
+          this.columns[args.index] = args.column;
+          console.log(this.columns);
+          break;
+        }
+        case "deleteColumn": {
+          this.columns.splice(args.index, 1);
+          break;
+        }
       }
       this.updateStorage();
     },

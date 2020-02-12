@@ -11,7 +11,7 @@
 <script>
 export default {
   name: "NewColumn",
-  data: function() {
+  data() {
     return {
       newColumninput: false,
       newColumnTitle: ""
