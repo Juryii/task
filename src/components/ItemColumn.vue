@@ -16,6 +16,20 @@
 <script>
 export default {
   name: "ItemColumn",
+  props: {
+    itemColumnTitle: {
+      type: String,
+      required: true
+    },
+    itemIndex: {
+      type: String,
+      required: true
+    },
+    columnIndex: {
+      type: String,
+      required: true
+    }
+  },
   props: ["itemColumnTitle", "itemIndex", "columnIndex"],
   data: function() {
     return {

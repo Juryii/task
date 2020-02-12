@@ -19,13 +19,13 @@ export default {
   },
   methods: {
     addNewColumn() {
-      if (this.newColumnTitle) {
-        this.$emit("addNewColumn", this.newColumnTitle);
-        this.newColumnTitle = "";
-        this.newColumninput = false;
-      } else {
+      if (!this.newColumnTitle) {
         alert("Введите название колонки");
+        return;
       }
+      this.$emit("addNewColumn", this.newColumnTitle);
+      this.newColumnTitle = "";
+      this.newColumninput = false;
     }
   }
 };
