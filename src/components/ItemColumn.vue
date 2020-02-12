@@ -1,16 +1,17 @@
 <template>
-  <div class="Item">
+  <v-list>
     <div v-if="flagEditItem[0] === itemIndex && flagEditItem[1] === columnIndex">
-      <input type="text" autofocus v-model="newInputItemTitle" @blur="onBlur" />
+      <v-text-field v-model="newInputItemTitle" @blur="onBlur"></v-text-field>
+<!--      <v-input type="text" autofocus v-model="newInputItemTitle" @blur="onBlur" />-->
     </div>
-    <div class="cardNameItem" v-else>
-      <p>{{ newInputItemTitle }}</p>
-      <div class="icons">
+    <v-list-item class="cardNameItem"  v-else>
+      <v-list-item-title>{{ newInputItemTitle }}</v-list-item-title>
+      <v-list-item-icon class="icons">
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
         <i class="fas fa-times" @click="deleteElement"></i>
-      </div>
-    </div>
-  </div>
+      </v-list-item-icon>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script>
@@ -40,14 +41,14 @@ export default {
 </script>
 
 <style scoped>
-.cardNameItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.Item:hover {
-  cursor: pointer;
-  background-color: #fff;
-  border-radius: 5px;
-}
+/*.cardNameItem {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: space-around;*/
+/*}*/
+/*.Item:hover {*/
+/*  cursor: pointer;*/
+/*  background-color: #fff;*/
+/*  border-radius: 5px;*/
+/*}*/
 </style>

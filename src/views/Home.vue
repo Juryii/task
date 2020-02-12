@@ -1,6 +1,6 @@
 <template>
-  <div class="home container">
-    <div class="column">
+  <div class="home">
+    <div class="row flex-nowrap ma-11 align-start">
       <Column
         v-for="(column, index) in columns"
         :columnTitle="column.title"
@@ -64,15 +64,18 @@ export default {
 };
 </script>
 <style scoped>
-.container {
-  display: block;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-.column {
-  display: flex;
-  flex-direction: row;
-  margin-left: 50px;
-  width: 400px;
-}
+  .home{
+    overflow-x: scroll;
+  }
+/*.container {*/
+/*  display: block;*/
+/*  flex-direction: row;*/
+/*  flex-wrap: nowrap;*/
+/*}*/
+/*.column {*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  margin-left: 50px;*/
+/*  width: 400px;*/
+/*}*/
 </style>
