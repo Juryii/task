@@ -8,7 +8,9 @@
         :key="index"
         :cardItems="column.cardItems"
         @updateColumn="updateColumn"
+        @showModal="updateModal"
       ></Column>
+      <ModalItem v-model="dialog" :card="currentCard"></ModalItem>
       <NewColumn @addNewColumn="addNewColumn"></NewColumn>
     </div>
   </div>
@@ -18,6 +20,7 @@
 import { setObj, getObj } from "@/utils/localStorage";
 import Column from "@/components/Column";
 import NewColumn from "@/components/NewColumn";
+import ModalItem from "@/components/ModalItem";
 
 export default {
   name: "home",
@@ -30,12 +33,17 @@ export default {
   },
   data: function() {
     return {
-      columns: []
+      columns: [],
+      dialog: false,
+      itemIndex: "",
+      itemColumn: "",
+      currentCard: {}
     };
   },
   components: {
     Column,
-    NewColumn
+    NewColumn,
+    ModalItem
   },
   methods: {
     updateColumn(args) {
@@ -59,6 +67,12 @@ export default {
     },
     updateStorage() {
       setObj("columns", this.columns);
+    },
+    updateModal(itemIndex, itemColumn) {
+      this.itemIndex = itemIndex;
+      this.itemColumn = itemColumn;
+      this.currentCard = this.columns[itemColumn].cardItems[itemIndex];
+      this.dialog = true;
     }
   }
 };
