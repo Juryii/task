@@ -10,7 +10,12 @@
         @updateColumn="updateColumn"
         @showModal="updateModal"
       ></Column>
-      <ModalItem v-model="dialog" :card="currentCard"></ModalItem>
+      <ModalItem
+        v-model="dialog"
+        :card="currentCard"
+        @deleteElement="deleteElement"
+        @onSaveElement="onSaveElement"
+      ></ModalItem>
       <NewColumn @addNewColumn="addNewColumn"></NewColumn>
     </v-layout>
   </div>
@@ -73,6 +78,17 @@ export default {
       this.itemColumn = itemColumn;
       this.currentCard = this.columns[itemColumn].cardItems[itemIndex];
       this.dialog = true;
+    },
+    deleteElement() {
+      this.currentCard = {};
+      this.dialog = false;
+      this.columns[this.itemColumn].cardItems.splice(this.itemIndex, 1);
+      console.log(this.columns[this.itemColumn]);
+      this.updateStorage();
+    },
+    onSaveElement(newCard) {
+      this.columns[this.itemColumn].cardItems[this.itemIndex] = newCard;
+      this.updateStorage();
     }
   }
 };

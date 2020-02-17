@@ -11,8 +11,9 @@
 
       <ItemColumn
         v-for="(columnItem, key) in cardItems"
-        :itemColumnTitle="columnItem.title"
+        :item="columnItem"
         :itemIndex="key"
+        :itemTitle="columnItem.title"
         :key="key"
         :columnIndex="columnIndex"
         @showModal="showModal"
