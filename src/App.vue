@@ -6,7 +6,7 @@
           <img src="@/assets/as_logo.svg" alt="logo" />
         </div>
       </div>
-      <div class="items_wrapper">
+      <!-- <div class="items_wrapper">
         <div class="item_nav item_nav--active">
           <a href="#">Мои задачи</a>
         </div>
@@ -26,12 +26,21 @@
             quae voluptates?.
           </a>
         </div>
-      </div>
+      </div>-->
+      <nav>
+        <ul class="drawer-menu">
+          <li v-for="link in menuLinks" :key="link.to">
+            <router-link :to="link.to" class="drawer-menu__link">{{ link.title }}</router-link>
+          </li>
+        </ul>
+      </nav>
     </div>
     <div class="main-wrapper">
       <div class="header_wrapper">
         <div class="main-wrapper-2">
-          <div class="text_logo"><span>ARTSURF</span> Taske</div>
+          <div class="text_logo">
+            <span>ARTSURF</span> Taske
+          </div>
           <div class="header_user_wrapper">
             <!--<div class="user-avatar"><img src="@/assets/resistance.jpg" alt=""></div>-->
             <div class="user-avatar user-avatar--text">U</div>
@@ -52,9 +61,21 @@
 <script>
 export default {
   name: "App",
-  data: () => ({
-    drawer: false
-  })
+  data() {
+    return {
+      drawer: false,
+      menuLinks: [
+        { title: "Мои задачи", to: "/" },
+        { title: "Backlog", to: "/backlog" },
+        { title: "Настройки", to: "/settings" },
+        { title: "Архив", to: "/archive" },
+        {
+          title: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+          to: "/link"
+        }
+      ]
+    };
+  }
 };
 </script>
 
@@ -72,11 +93,11 @@ export default {
 .logo_nav_drawer {
   padding: 24px 60px;
 }
-.items_wrapper {
-  padding-left: 16px;
-  padding-right: 16px;
+.drawer-menu {
+  padding: 0 16px;
+  list-style: none;
 }
-.item_nav {
+.drawer-menu__link {
   font-size: 15px;
   font-style: normal;
   font-weight: normal;
@@ -90,19 +111,17 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   padding-right: 14px;
-}
-.item_nav:hover {
-  color: white;
-  cursor: pointer;
-}
-.item_nav a {
-  color: inherit;
+  display: block;
   text-decoration: none;
+  transition: all 0.3s;
 }
-.item_nav--active {
+.drawer-menu__link.router-link-active {
   font-weight: bold;
   color: white;
   background-color: rgba(28, 21, 46, 0.54);
+}
+.drawer-menu__link:hover {
+  color: white;
 }
 
 /* HEADER Styles*/
