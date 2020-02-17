@@ -39,6 +39,7 @@ export default {
   border-radius: 10px;
   margin-left: 30px;
   padding: 24px 50px;
+  white-space: nowrap;
 }
 .btn_new_column:hover {
   border: 2px solid #e7e7e7;

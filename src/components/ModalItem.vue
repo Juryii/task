@@ -188,7 +188,7 @@ export default {
   color: #727272;
   margin-bottom: 5px;
 }
-.selects_panel{
+.selects_panel {
   margin-left: 24px;
   margin-right: 24px;
   margin-top: 36px;

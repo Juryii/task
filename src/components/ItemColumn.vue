@@ -5,12 +5,12 @@
     </div>
     <div class="cardNameItem" @click="showModal" v-else>
       <div class="card_title">{{ newInputItemTitle }}</div>
-      <span :style="{'background-color': labelss[0].color}">{{ labelss[0].name }}</span>
+      <span :style="{ 'background-color': labelss[0].color }">{{ labelss[0].name }}</span>
       <div class="icons">
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
       </div>
       <div class="user_info">
-<!--        <div class="user-avatar"><img src="@/assets/resistance.jpg" alt="Аватар"></div>-->
+        <!--        <div class="user-avatar"><img src="@/assets/resistance.jpg" alt="Аватар"></div>-->
         <div class="user-avatar user-avatar--text">U</div>
         <div>UserName</div>
       </div>
@@ -74,45 +74,48 @@ export default {
   border: 2px solid rgba(245, 25, 25, 0.25);
   box-shadow: 1px 3px 10px rgba(210, 210, 210, 0.56), 0px 1px 2px rgba(0, 0, 0, 0.13);
   border-radius: 6px;
-  margin: 8px;
+  margin-bottom: 8px;
   padding: 16px;
-
 }
-.card_title{
+.card_title {
   margin-bottom: 16px;
+  overflow-wrap: break-word;
 }
-  .cardNameItem span{
-    border-radius: 3px;
-    padding: 4px 8px;
-  }
-  .user_info{
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-  }
-.user-avatar{
+.cardNameItem span {
+  border-radius: 3px;
+  padding: 4px 8px;
+}
+.user_info {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+.user-avatar {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   margin-right: 16px;
-  box-shadow: -4px -4px 8px #FFFFFF, 4px 4px 8px #ECECEC;
+  box-shadow: -4px -4px 8px #ffffff, 4px 4px 8px #ececec;
 }
-.user-avatar--text{
+.user-avatar--text {
   background-color: #dee5c9;
   line-height: 40px;
   text-align: center;
 }
 
-.user-avatar img{
+.user-avatar img {
   width: inherit;
   height: inherit;
   object-fit: cover;
   border-radius: inherit;
 }
-.cardNameItem:hover{
-  background: #EDF4FA;
+.cardNameItem:hover {
+  background: #edf4fa;
 }
 .cardNameItem:hover .card_title {
   color: blue;
+}
+.card:last-child .cardNameItem {
+  margin-bottom: 0;
 }
 </style>

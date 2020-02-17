@@ -20,27 +20,29 @@
           <a href="#">Архив</a>
         </div>
         <div class="item_nav">
-          <a href="#"
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque cupiditate dolor dolores ducimus
+          <a href="#">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque cupiditate dolor dolores ducimus
             exercitationem molestias, nobis placeat quam rem voluptate? A aliquam culpa delectus dolorum ex omnis porro
-            quae voluptates?.</a
-          >
+            quae voluptates?.
+          </a>
         </div>
       </div>
     </div>
     <div class="main-wrapper">
       <div class="header_wrapper">
-        <div class="text_logo"><span>ARTSURF</span> Taske</div>
-
-        <div class="header_user_wrapper">
-          <!--            <div class="user-avatar"><img src="@/assets/resistance.jpg" alt=""></div>-->
-          <div class="user-avatar user-avatar--text">U</div>
-          <p class="userName">UserName</p>
+        <div class="main-wrapper-2">
+          <div class="text_logo"><span>ARTSURF</span> Taske</div>
+          <div class="header_user_wrapper">
+            <!--<div class="user-avatar"><img src="@/assets/resistance.jpg" alt=""></div>-->
+            <div class="user-avatar user-avatar--text">U</div>
+            <p class="userName">UserName</p>
+          </div>
         </div>
       </div>
-
       <div class="content_wrapper">
-        <div class="my_tasks">Мои задачи</div>
+        <div class="main-wrapper-2">
+          <h1>Мои задачи</h1>
+        </div>
         <router-view />
       </div>
     </div>
@@ -106,13 +108,25 @@ export default {
 /* HEADER Styles*/
 .header_wrapper {
   height: 68px;
-  background-color: #f9f9f9;
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  margin-bottom: 40px;
+}
+.main-wrapper-2 {
+  padding: 0 32px;
+  flex-direction: row;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.userName {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  color: #0e0e0e;
+}
 .text_logo {
-  padding: 20px 32px;
   font-size: 24px;
   line-height: 28px;
 }
@@ -120,7 +134,6 @@ export default {
   font-weight: bold;
 }
 .header_user_wrapper {
-  padding: 32px 32px 32px 8px;
   display: flex;
   align-items: center;
 }
@@ -128,13 +141,14 @@ export default {
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  margin-right: 16px;
+  margin-right: 12px;
   box-shadow: -4px -4px 8px #ffffff, 4px 4px 8px #ececec;
 }
 .user-avatar--text {
-  background-color: #dee5c9;
+  background-color: #ffffff;
   line-height: 40px;
   text-align: center;
+  color: #ff6d5c;
 }
 
 .user-avatar img {

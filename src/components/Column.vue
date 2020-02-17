@@ -25,7 +25,7 @@
       <button @click="addNewCardItem">Добавить</button>
     </div>
     <div v-else>
-      <button class="btn_new_card" @click="flagInputCard = columnIndex">Добавить еще одну карточку</button>
+      <button class="btn_new_card" @click="flagInputCard = columnIndex">Добавить задачу</button>
     </div>
   </div>
 </template>
@@ -111,15 +111,16 @@ export default {
   margin-left: 40px;
 }
 .card_wrapper {
-  box-shadow: 1px 3px 10px rgba(210, 210, 210, 0.56), 0px 1px 2px rgba(0, 0, 0, 0.13);
   background: rgba(240, 240, 240, 0.54);
   border-radius: 10px;
+  padding-top: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 2px;
 }
 .cardName {
   display: flex;
   flex-direction: row;
-  margin-top: 12px;
-  margin-left: 13px;
   margin-bottom: 12px;
 }
 .name_column {
@@ -142,6 +143,7 @@ export default {
   padding-bottom: 16px;
   margin-top: 16px;
   margin-bottom: 20px;
+  white-space: nowrap;
 }
 .btn_new_card:hover {
   background-color: rgba(240, 240, 240, 0.54);
@@ -149,7 +151,6 @@ export default {
 .add_new_card button {
   background: rgba(240, 240, 240, 0.54);
   padding: 24px 60px;
-
 }
 .add_new_card button:hover {
   background: rgb(205, 205, 205);

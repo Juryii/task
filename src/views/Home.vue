@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="row flex-nowrap ma-11 align-start">
+    <v-layout>
       <Column
         v-for="(column, index) in columns"
         :columnTitle="column.title"
@@ -12,7 +12,7 @@
       ></Column>
       <ModalItem v-model="dialog" :card="currentCard"></ModalItem>
       <NewColumn @addNewColumn="addNewColumn"></NewColumn>
-    </div>
+    </v-layout>
   </div>
 </template>
 
