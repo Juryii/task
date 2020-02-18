@@ -190,13 +190,16 @@ export default {
   padding: 6px;
 }
 .is_icon img {
-  width: inherit;
-  height: inherit;
+  width: 12px;
+  height: 12px;
+  justify-content: center;
   object-fit: cover;
+  margin-bottom: 6px;
   border-radius: inherit;
 }
 .is_icon:hover {
   background: #d8e8f8;
+  cursor: pointer;
 }
 .head_card_title {
   font-weight: bold;

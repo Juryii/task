@@ -38,7 +38,7 @@
     <div class="main-wrapper">
       <header class="header_wrapper">
         <div class="main-wrapper-2">
-          <div class="text_logo"><span>ARTSURF</span> Taske</div>
+          <div class="text_logo"><span>ARTSURF</span> Tasker</div>
           <div class="header_user_wrapper">
             <!--<div class="user-avatar"><img src="@/assets/resistance.jpg" alt=""></div>-->
             <div class="user-avatar user-avatar--text">U</div>
