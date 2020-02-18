@@ -1,15 +1,17 @@
 <template>
   <div class="home">
     <v-layout>
-      <Column
-        v-for="(column, index) in columns"
-        :columnTitle="column.title"
-        :columnIndex="index"
-        :key="index"
-        :cardItems="column.cardItems"
-        @updateColumn="updateColumn"
-        @showModal="updateModal"
-      ></Column>
+      <draggable class="list-group" :list="columns" group="columns" @change="log">
+        <Column
+          v-for="(column, index) in columns"
+          :columnTitle="column.title"
+          :columnIndex="index"
+          :key="index"
+          :cardItems="column.cardItems"
+          @updateColumn="updateColumn"
+          @showModal="updateModal"
+        ></Column>
+      </draggable>
       <ModalItem
         v-model="dialog"
         :card="currentCard"
@@ -26,6 +28,7 @@ import { setObj, getObj } from "@/utils/localStorage";
 import Column from "@/components/Column";
 import NewColumn from "@/components/NewColumn";
 import ModalItem from "@/components/ModalItem";
+import draggable from "vuedraggable";
 
 export default {
   name: "home",
@@ -48,9 +51,24 @@ export default {
   components: {
     Column,
     NewColumn,
-    ModalItem
+    ModalItem,
+    draggable
   },
   methods: {
+    add: function() {
+      this.column.cardItems.push({});
+    },
+    replace: function() {
+      this.column.cardItems = [{}];
+    },
+    clone: function(el) {
+      return {
+        title: el.title + " cloned"
+      };
+    },
+    log: function(evt) {
+      window.console.log(evt);
+    },
     updateColumn(args) {
       switch (args.action) {
         case "update": {
@@ -94,6 +112,9 @@ export default {
 };
 </script>
 <style scoped>
+.list-group {
+  display: flex;
+}
 .home {
   overflow-x: scroll;
 }

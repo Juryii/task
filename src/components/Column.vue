@@ -13,18 +13,19 @@
           <v-text-field v-model="newColumnTitle" autofocus @blur="onBlur"></v-text-field>
         </form>
       </div>
-
-      <ItemColumn
-        v-for="(columnItem, key) in cardItems"
-        :item="columnItem"
-        :itemIndex="key"
-        :itemTitle="columnItem.title"
-        :key="columnItem.uId"
-        :columnIndex="columnIndex"
-        @showModal="showModal"
-        @editElementTitle="editElementTitle"
-        @deleteItemColumn="deleteItemColumn"
-      ></ItemColumn>
+      <draggable class="list-group" :list="cardItems" group="items" @change="log">
+        <ItemColumn
+          v-for="(columnItem, key) in cardItems"
+          :item="columnItem"
+          :itemIndex="key"
+          :itemTitle="columnItem.title"
+          :key="columnItem.uId"
+          :columnIndex="columnIndex"
+          @showModal="showModal"
+          @editElementTitle="editElementTitle"
+          @deleteItemColumn="deleteItemColumn"
+        ></ItemColumn>
+      </draggable>
     </div>
     <div class="add_new_card" v-if="flagInputCard === columnIndex">
       <form @submit.prevent="addNewCardItem">
@@ -40,12 +41,14 @@
 
 <script>
 import { uuid } from "uuidv4";
+import draggable from "vuedraggable";
 import ItemColumn from "./ItemColumn";
 
 export default {
   name: "Column",
   components: {
-    ItemColumn
+    ItemColumn,
+    draggable
   },
   props: {
     columnTitle: {
@@ -80,6 +83,20 @@ export default {
     }
   },
   methods: {
+    add: function() {
+      this.column.cardItems.push({});
+    },
+    replace: function() {
+      this.column.cardItems = [{}];
+    },
+    clone: function(el) {
+      return {
+        title: el.title + " cloned"
+      };
+    },
+    log: function(evt) {
+      window.console.log(evt);
+    },
     updateColumn(action) {
       this.$emit("updateColumn", { index: this.columnIndex, column: this.column, action: action });
     },

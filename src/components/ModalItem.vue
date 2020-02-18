@@ -20,16 +20,19 @@
         <div class="desc_row">
           <div class="description">
             <span class="placeholder_description">Описание задачи</span>
-            <v-textarea class="description_text" solo v-model="descriptionCard" :value="descriptionCard"></v-textarea>
+            <v-textarea
+              class="description_text mt-5"
+              no-resize
+              rounded
+              Auto-grow
+              v-model="descriptionCard"
+              :value="descriptionCard"
+            ></v-textarea>
             <!-- <div class="description_text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere impedit magnam soluta veritatis voluptas.
               Ad dolorem est modi quisquam sint unde. Consequatur consequuntur ea earum impedit laboriosam maxime nulla
               quas.{{ card.description }}
             </div> -->
-            <div class="button_wrapper">
-              <button class="btn_save" @click="onSaveElement">Сохранить</button
-              ><button class="btn_cancel" @click="close">Отменить</button>
-            </div>
           </div>
           <div class="selects_panel">
             <div class="priority">
@@ -55,6 +58,10 @@
               ></v-select>
             </div>
           </div>
+        </div>
+        <div class="button_wrapper">
+          <button class="btn_save" @click="onSaveElement">Сохранить</button
+          ><button class="btn_cancel" @click="close">Отменить</button>
         </div>
       </div>
     </v-dialog>
@@ -161,6 +168,7 @@ export default {
 <style scoped>
 .wrapp_modal_window {
   background-color: #fff;
+  border-radius: 10px;
 }
 .title_wrap {
   display: flex;
@@ -179,6 +187,7 @@ export default {
   margin-right: 8px;
   background: #edf4fa;
   border-radius: 4px;
+  padding: 6px;
 }
 .is_icon img {
   width: inherit;
@@ -202,6 +211,10 @@ export default {
   margin-left: 24px;
   margin-right: 12px;
   margin-top: 36px;
+  border: 1px solid #e4ebef;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px rgba(216, 231, 240, 0.25);
+  border-radius: 3px;
 }
 .placeholder_description {
   margin-top: 12px;
@@ -253,7 +266,10 @@ export default {
   margin-right: 24px;
   margin-top: 36px;
 }
-
+.priority,
+.executor {
+  width: 147px;
+}
 .desc_row {
   display: flex;
 }
