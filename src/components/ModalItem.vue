@@ -3,36 +3,56 @@
     <v-dialog :value="isOpen" width="710px" @input="onDialogInput">
       <div class="wrapp_modal_window">
         <div class="title_wrap">
-          <div class="head_card_title">
-            {{ card.title }}
+          <div class="head_card_title" v-if="!flagEditTitle">
+            {{ cardTitle }}
+          </div>
+          <div class="edit_title" v-else>
+            <v-text-field type="text" v-model="cardTitle" @blur="flagEditTitle = false" />
           </div>
           <button @click="close"><img src="@/assets/ic-close.svg" alt="Закрыть" /></button>
         </div>
         <div class="change_icons">
-          <div class="is_icon"><img src="@/assets/ic-edit.svg" alt="Редактировать заголовок" /></div>
-          <div class="is_icon"><img src="@/assets/ic-trash.svg" alt="Удалить элемент" /></div>
+          <div class="is_icon" @click="flagEditTitle = true">
+            <img src="@/assets/ic-edit.svg" alt="Редактировать заголовок" />
+          </div>
+          <div @click="deleteElemet" class="is_icon"><img src="@/assets/ic-trash.svg" alt="Удалить элемент" /></div>
         </div>
         <div class="desc_row">
           <div class="description">
             <span class="placeholder_description">Описание задачи</span>
-            <div class="description_text">
+            <v-textarea class="description_text" v-model="descriptionCard" :value="descriptionCard"></v-textarea>
+            <!-- <div class="description_text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere impedit magnam soluta veritatis voluptas.
               Ad dolorem est modi quisquam sint unde. Consequatur consequuntur ea earum impedit laboriosam maxime nulla
               quas.{{ card.description }}
-            </div>
+            </div> -->
             <div class="button_wrapper">
-              <button class="btn_save">Сохранить</button><button class="btn_cancel">Отменить</button>
+              <button class="btn_save" @click="onSaveElement">Сохранить</button
+              ><button class="btn_cancel" @click="close">Отменить</button>
             </div>
           </div>
           <div class="selects_panel">
             <div class="priority">
               <span>Приоритет</span>
-              <v-select :items="labels" label="Solo field" solo> </v-select>
+              <v-select
+                item-text="name"
+                v-model="selectedLebel"
+                :items="labels"
+                :label="card.labelIndex ? labels[selectedLebelIndex].name : 'select label'"
+                solo
+              >
+              </v-select>
             </div>
 
             <div class="executor">
               <span>Исполнитель</span>
-              <v-select :items="members" label="Solo field" solo></v-select>
+              <v-select
+                item-text="name"
+                v-model="selectedMember"
+                :items="members"
+                :label="card.memberIndex ? members[selectedMemberIndex].name : 'select user'"
+                solo
+              ></v-select>
             </div>
           </div>
         </div>
@@ -46,14 +66,6 @@ import { labels, members } from "../utils/constans";
 
 export default {
   name: "ModalItem",
-  mounted() {
-    for (let i = 0; i < members.length; i++) {
-      this.members.push(members[i].name);
-    }
-    for (let i = 0; i < labels.length; i++) {
-      this.labels.push(labels[i].name);
-    }
-  },
   props: {
     card: {
       type: Object,
@@ -63,23 +75,45 @@ export default {
   },
   data() {
     return {
+      flagEditTitle: false,
       isOpen: this.value,
-      members: [],
-      labels: []
+      members: members,
+      labels: labels,
+      selectedMember: "",
+      selectedLebel: "",
+      cardTitle: this.card.title,
+      descriptionCard: this.card.description,
+      selectedMemberIndex: this.card.memberIndex,
+      selectedLebelIndex: this.card.labelIndex,
+      currentCurd: {
+        title: this.cardTitle,
+        description: this.descriptionCard,
+        labelIndex: this.selectedLebelIndex,
+        memberIndex: this.selectedMemberIndex
+      }
     };
   },
   watch: {
     value(value) {
       this.isOpen = value;
+    },
+    card(value) {
+      this.descriptionCard = value.description;
+      this.selectedMemberIndex = value.memberIndex;
+      this.selectedLebelIndex = value.labelIndex;
+      this.cardTitle = value.title;
+      // this.form= {...value}
     }
   },
   methods: {
-    selects_elem(arr) {
-      let select = [];
-      for (let i = 0; arr.length < i; i++) {
-        select.push(arr[i].name);
-      }
-      return select;
+    clearVars() {
+      this.currentCurd = {};
+      this.descriptionCard = "";
+      this.selectedMember = "";
+      this.selectedLebel = "";
+    },
+    deleteElemet() {
+      this.$emit("deleteElement");
     },
     onDialogInput(val) {
       val ? this.open() : this.close();
@@ -91,6 +125,34 @@ export default {
     open() {
       this.isOpen = true;
       this.$emit("input", true);
+    },
+    onSaveElement() {
+      if (this.selectedLebel.length > 0) {
+        let labelIndex = labels.findIndex(label => label.name === this.selectedLebel);
+        if (labelIndex !== -1) {
+          this.currentCurd.labelIndex = labelIndex;
+        } else {
+          console.log("non find " + this.selectedLebel);
+        }
+      }
+      if (this.selectedMember.length > 0) {
+        let memberIndex = members.findIndex(member => member.name === this.selectedMember);
+        if (memberIndex !== -1) {
+          this.currentCurd.memberIndex = memberIndex;
+        } else {
+          console.log("non find " + this.selectedMember);
+        }
+      }
+      if (this.descriptionCard) {
+        this.currentCurd.description = this.descriptionCard;
+      } else {
+        this.currentCurd.description = this.card.description;
+      }
+      this.currentCurd.title = this.card.title;
+      console.log(this.currentCurd);
+      this.$emit("onSaveElement", this.currentCurd);
+      this.close();
+      this.clearVars();
     }
   }
 };
@@ -151,7 +213,6 @@ export default {
 }
 .description_text {
   margin-left: 18px;
-  margin-top: 30px;
   margin-right: 18px;
 }
 .button_wrapper {
@@ -196,5 +257,12 @@ export default {
 
 .desc_row {
   display: flex;
+}
+.edit_title {
+  margin-top: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 12px;
+  width: 100%;
 }
 </style>

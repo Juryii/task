@@ -5,12 +5,29 @@
     </div>
     <div class="cardNameItem" @click="showModal" v-else>
       <div class="card_title">{{ newInputItemTitle }}</div>
-      <span :style="{ 'background-color': labelss[0].color }">{{ labelss[0].name }}</span>
+      <span
+        v-if="itemElement.labelIndex"
+        :style="{
+          color: labelss[itemElement.labelIndex].color,
+          'background-color': labelss[itemElement.labelIndex].background_color
+        }"
+        >{{ labelss[itemElement.labelIndex].name }}</span
+      >
+      <span v-else :style="{ color: labelss[0].color, 'background-color': labelss[0].background_color }">{{
+        labelss[0].name
+      }}</span>
+      <!-- <span :style="{ 'background-color': labelss[0].color }">{{ labelss[0].name }}</span> -->
       <div class="icons">
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
       </div>
-      <div class="user_info">
-        <!--        <div class="user-avatar"><img src="@/assets/resistance.jpg" alt="Аватар"></div>-->
+      <div class="user_info" v-if="item.memberIndex">
+        <div v-if="memberss[itemElement.memberIndex].avatar" class="user-avatar">
+          <img src="@/assets/resistance.jpg" alt="Аватар" />
+        </div>
+        <div v-else class="user-avatar user-avatar--text">{{ memberss[itemElement.memberIndex].name[0] }}</div>
+        <div>{{ memberss[itemElement.memberIndex].name }}</div>
+      </div>
+      <div class="user_info" v-else>
         <div class="user-avatar user-avatar--text">U</div>
         <div>UserName</div>
       </div>
@@ -24,7 +41,11 @@ import { labels, members } from "../utils/constans";
 export default {
   name: "ItemColumn",
   props: {
-    itemColumnTitle: {
+    item: {
+      type: Object,
+      required: true
+    },
+    itemTitle: {
       type: String,
       required: true
     },
@@ -42,7 +63,8 @@ export default {
       flagEditItem: "",
       labelss: labels,
       memberss: members,
-      newInputItemTitle: this.itemColumnTitle
+      itemElement: this.item,
+      newInputItemTitle: this.itemTitle
     };
   },
   methods: {

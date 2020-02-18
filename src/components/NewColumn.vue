@@ -3,8 +3,10 @@
     <button class="btn_new_column" @click="newColumninput = !newColumninput">Добавить новую колонку</button>
   </div>
   <div class="addNewColumn" v-else>
-    <v-text-field label="Ввести заголовок списка" v-model="newColumnTitle"></v-text-field>
-    <button @click="addNewColumn">Добавить</button>
+    <form @submit.prevent="addNewColumn">
+      <v-text-field label="Ввести заголовок списка" v-model="newColumnTitle"></v-text-field>
+      <button type="submit">Добавить</button>
+    </form>
   </div>
 </template>
 
