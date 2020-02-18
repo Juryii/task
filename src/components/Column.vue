@@ -1,12 +1,14 @@
 <template>
   <div class="wrap_btn">
     <div class="card_wrapper">
-      <div class="cardName" v-if="flagEditColumntitle !== columnIndex">
+      <div class="cardName" v-if="flagEditColumntitle !== columnIndex" @click="flagEditColumntitle = columnIndex">
         <div class="name_column">{{ column.title }}</div>
         <div class="name_column counter_items">{{ column.cardItems.length }}</div>
       </div>
       <div v-else>
-        <v-text-field v-model="newColumnTitle" autofocus @blur="onBlur"></v-text-field>
+        <form @submit.prevent="onBlur">
+          <v-text-field v-model="newColumnTitle" autofocus @blur="onBlur"></v-text-field>
+        </form>
       </div>
 
       <ItemColumn
@@ -14,7 +16,7 @@
         :item="columnItem"
         :itemIndex="key"
         :itemTitle="columnItem.title"
-        :key="key"
+        :key="columnItem.uId"
         :columnIndex="columnIndex"
         @showModal="showModal"
         @editElementTitle="editElementTitle"
@@ -22,8 +24,10 @@
       ></ItemColumn>
     </div>
     <div class="add_new_card" v-if="flagInputCard === columnIndex">
-      <v-text-field label="Введите заголовок для этой карточки" v-model="inputCardItem"></v-text-field>
-      <button @click="addNewCardItem">Добавить</button>
+      <form @submit.prevent="addNewCardItem">
+        <v-text-field label="Введите заголовок для этой карточки" v-model="inputCardItem"></v-text-field>
+        <button type="submit">Добавить</button>
+      </form>
     </div>
     <div v-else>
       <button class="btn_new_card" @click="flagInputCard = columnIndex">Добавить задачу</button>
@@ -32,6 +36,7 @@
 </template>
 
 <script>
+import { uuid } from "uuidv4";
 import ItemColumn from "./ItemColumn";
 
 export default {
@@ -66,6 +71,9 @@ export default {
   watch: {
     columnTitle(value) {
       this.column.title = value;
+    },
+    cardItems(value) {
+      this.column.cardItems = value;
     }
   },
   methods: {
@@ -94,7 +102,7 @@ export default {
         alert("поле не может быть пустым");
         return;
       }
-      this.column.cardItems.push({ title: this.inputCardItem });
+      this.column.cardItems.push({ uId: uuid(), title: this.inputCardItem });
       this.updateColumn("update");
       this.inputCardItem = "";
       this.flagInputCard = "";

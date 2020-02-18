@@ -4,10 +4,10 @@
       <div class="wrapp_modal_window">
         <div class="title_wrap">
           <div class="head_card_title" v-if="!flagEditTitle">
-            {{ card.title }}
+            {{ cardTitle }}
           </div>
           <div class="edit_title" v-else>
-            <v-text-field type="text" v-model="card.title" @blur="flagEditTitle = false" />
+            <v-text-field type="text" v-model="cardTitle" @blur="flagEditTitle = false" />
           </div>
           <button @click="close"><img src="@/assets/ic-close.svg" alt="Закрыть" /></button>
         </div>
@@ -38,7 +38,7 @@
                 item-text="name"
                 v-model="selectedLebel"
                 :items="labels"
-                :label="card.labelIndex ? labels[card.labelIndex].name : 'select label'"
+                :label="card.labelIndex ? labels[selectedLebelIndex].name : 'select label'"
                 solo
               >
               </v-select>
@@ -50,7 +50,7 @@
                 item-text="name"
                 v-model="selectedMember"
                 :items="members"
-                :label="card.memberIndex ? members[card.memberIndex].name : 'select user'"
+                :label="card.memberIndex ? members[selectedMemberIndex].name : 'select user'"
                 solo
               ></v-select>
             </div>
@@ -79,15 +79,30 @@ export default {
       isOpen: this.value,
       members: members,
       labels: labels,
-      currentCurd: {},
+      selectedMember: "",
+      selectedLebel: "",
+      cardTitle: this.card.title,
       descriptionCard: this.card.description,
-      selectedMember: this.card.memberIndex,
-      selectedLebel: this.card.labelIndex
+      selectedMemberIndex: this.card.memberIndex,
+      selectedLebelIndex: this.card.labelIndex,
+      currentCurd: {
+        title: this.cardTitle,
+        description: this.descriptionCard,
+        labelIndex: this.selectedLebelIndex,
+        memberIndex: this.selectedMemberIndex
+      }
     };
   },
   watch: {
     value(value) {
       this.isOpen = value;
+    },
+    card(value) {
+      this.descriptionCard = value.description;
+      this.selectedMemberIndex = value.memberIndex;
+      this.selectedLebelIndex = value.labelIndex;
+      this.cardTitle = value.title;
+      // this.form= {...value}
     }
   },
   methods: {
@@ -109,23 +124,24 @@ export default {
     },
     open() {
       this.isOpen = true;
-      this.clearVars();
       this.$emit("input", true);
     },
     onSaveElement() {
-      if (this.selectedLebel) {
+      if (this.selectedLebel.length > 0) {
         let labelIndex = labels.findIndex(label => label.name === this.selectedLebel);
-        if (labelIndex == -1) {
-          return;
+        if (labelIndex !== -1) {
+          this.currentCurd.labelIndex = labelIndex;
+        } else {
+          console.log("non find " + this.selectedLebel);
         }
-        this.currentCurd.labelIndex = labelIndex;
       }
-      if (this.selectedMember) {
+      if (this.selectedMember.length > 0) {
         let memberIndex = members.findIndex(member => member.name === this.selectedMember);
-        if (memberIndex == -1) {
-          return;
+        if (memberIndex !== -1) {
+          this.currentCurd.memberIndex = memberIndex;
+        } else {
+          console.log("non find " + this.selectedMember);
         }
-        this.currentCurd.memberIndex = memberIndex;
       }
       if (this.descriptionCard) {
         this.currentCurd.description = this.descriptionCard;

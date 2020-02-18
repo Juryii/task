@@ -6,12 +6,12 @@
     <div class="cardNameItem" @click="showModal" v-else>
       <div class="card_title">{{ newInputItemTitle }}</div>
       <span
-        v-if="item.labelIndex"
+        v-if="itemElement.labelIndex"
         :style="{
-          color: labelss[item.labelIndex].color,
-          'background-color': labelss[item.labelIndex].background_color
+          color: labelss[itemElement.labelIndex].color,
+          'background-color': labelss[itemElement.labelIndex].background_color
         }"
-        >{{ labelss[item.labelIndex].name }}</span
+        >{{ labelss[itemElement.labelIndex].name }}</span
       >
       <span v-else :style="{ color: labelss[0].color, 'background-color': labelss[0].background_color }">{{
         labelss[0].name
@@ -21,11 +21,11 @@
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
       </div>
       <div class="user_info" v-if="item.memberIndex">
-        <div v-if="memberss[item.memberIndex].avatar" class="user-avatar">
+        <div v-if="memberss[itemElement.memberIndex].avatar" class="user-avatar">
           <img src="@/assets/resistance.jpg" alt="Аватар" />
         </div>
-        <div v-else class="user-avatar user-avatar--text">{{ memberss[item.memberIndex].name[0] }}</div>
-        <div>{{ memberss[item.memberIndex].name }}</div>
+        <div v-else class="user-avatar user-avatar--text">{{ memberss[itemElement.memberIndex].name[0] }}</div>
+        <div>{{ memberss[itemElement.memberIndex].name }}</div>
       </div>
       <div class="user_info" v-else>
         <div class="user-avatar user-avatar--text">U</div>
@@ -63,6 +63,7 @@ export default {
       flagEditItem: "",
       labelss: labels,
       memberss: members,
+      itemElement: this.item,
       newInputItemTitle: this.itemTitle
     };
   },
