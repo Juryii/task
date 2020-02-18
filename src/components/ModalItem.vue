@@ -20,7 +20,7 @@
         <div class="desc_row">
           <div class="description">
             <span class="placeholder_description">Описание задачи</span>
-            <v-textarea class="description_text" v-model="descriptionCard" :value="descriptionCard"></v-textarea>
+            <v-textarea class="description_text" solo v-model="descriptionCard" :value="descriptionCard"></v-textarea>
             <!-- <div class="description_text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere impedit magnam soluta veritatis voluptas.
               Ad dolorem est modi quisquam sint unde. Consequatur consequuntur ea earum impedit laboriosam maxime nulla
@@ -201,7 +201,6 @@ export default {
   width: 492px;
   margin-left: 24px;
   margin-right: 12px;
-  background-color: #bfbfbf;
   margin-top: 36px;
 }
 .placeholder_description {

@@ -36,24 +36,22 @@
       </nav>
     </div>
     <div class="main-wrapper">
-      <div class="header_wrapper">
+      <header class="header_wrapper">
         <div class="main-wrapper-2">
-          <div class="text_logo">
-            <span>ARTSURF</span> Taske
-          </div>
+          <div class="text_logo"><span>ARTSURF</span> Taske</div>
           <div class="header_user_wrapper">
             <!--<div class="user-avatar"><img src="@/assets/resistance.jpg" alt=""></div>-->
             <div class="user-avatar user-avatar--text">U</div>
             <p class="userName">UserName</p>
           </div>
         </div>
-      </div>
-      <div class="content_wrapper">
+      </header>
+      <main class="content_wrapper">
         <div class="main-wrapper-2">
           <h1>Мои задачи</h1>
         </div>
         <router-view />
-      </div>
+      </main>
     </div>
   </div>
 </template>
@@ -138,6 +136,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 24px;
 }
 .userName {
   font-weight: bold;
@@ -148,6 +147,7 @@ export default {
 .text_logo {
   font-size: 24px;
   line-height: 28px;
+  margin-top: 20px;
 }
 .text_logo span {
   font-weight: bold;
@@ -155,6 +155,7 @@ export default {
 .header_user_wrapper {
   display: flex;
   align-items: center;
+  margin-top: 12px;
 }
 .user-avatar {
   height: 40px;
@@ -168,6 +169,8 @@ export default {
   line-height: 40px;
   text-align: center;
   color: #ff6d5c;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .user-avatar img {

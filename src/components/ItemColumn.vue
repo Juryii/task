@@ -5,17 +5,10 @@
     </div>
     <div class="cardNameItem" @click="showModal" v-else>
       <div class="card_title">{{ newInputItemTitle }}</div>
-      <span
-        v-if="itemElement.labelIndex"
-        :style="{
-          color: labelss[itemElement.labelIndex].color,
-          'background-color': labelss[itemElement.labelIndex].background_color
-        }"
-        >{{ labelss[itemElement.labelIndex].name }}</span
-      >
-      <span v-else :style="{ color: labelss[0].color, 'background-color': labelss[0].background_color }">{{
-        labelss[0].name
+      <span v-if="itemElement.labelIndex" :class="'tag--' + labelss[itemElement.labelIndex].tag">{{
+        labelss[itemElement.labelIndex].name
       }}</span>
+      <span v-else :class="'tag--' + labelss[0].tag">{{ labelss[0].name }}</span>
       <!-- <span :style="{ 'background-color': labelss[0].color }">{{ labelss[0].name }}</span> -->
       <div class="icons">
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
@@ -25,11 +18,11 @@
           <img src="@/assets/resistance.jpg" alt="Аватар" />
         </div>
         <div v-else class="user-avatar user-avatar--text">{{ memberss[itemElement.memberIndex].name[0] }}</div>
-        <div>{{ memberss[itemElement.memberIndex].name }}</div>
+        <div class="user-name-text">{{ memberss[itemElement.memberIndex].name }}</div>
       </div>
       <div class="user_info" v-else>
         <div class="user-avatar user-avatar--text">U</div>
-        <div>UserName</div>
+        <div class="user-name-text">UserName</div>
       </div>
     </div>
   </div>
@@ -111,6 +104,7 @@ export default {
   margin-top: 15px;
   display: flex;
   align-items: center;
+  padding-bottom: 12px;
 }
 .user-avatar {
   height: 40px;
@@ -123,8 +117,15 @@ export default {
   background-color: #dee5c9;
   line-height: 40px;
   text-align: center;
+  font-weight: bold;
+  font-size: 16px;
 }
-
+.user-name-text {
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  color: #0e0e0e;
+}
 .user-avatar img {
   width: inherit;
   height: inherit;
@@ -139,5 +140,25 @@ export default {
 }
 .card:last-child .cardNameItem {
   margin-bottom: 0;
+}
+.tag--highest {
+  color: #ffffff;
+  background-color: #d5495a;
+}
+.tag--high {
+  color: #ffffff;
+  background-color: #f0a4ad;
+}
+.tag--medium {
+  color: #b5a15f;
+  background-color: #fbf0ca;
+}
+.tag--low {
+  color: #6ca451;
+  background-color: #dbf1d1;
+}
+.tag--lowest {
+  color: #388513;
+  background-color: #a0ce8b;
 }
 </style>

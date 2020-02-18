@@ -1,9 +1,12 @@
 <template>
   <div class="wrap_btn">
     <div class="card_wrapper">
-      <div class="cardName" v-if="flagEditColumntitle !== columnIndex" @click="flagEditColumntitle = columnIndex">
-        <div class="name_column">{{ column.title }}</div>
-        <div class="name_column counter_items">{{ column.cardItems.length }}</div>
+      <div class="cardName" v-if="flagEditColumntitle !== columnIndex">
+        <div class="title_wrap" @click="flagEditColumntitle = columnIndex">
+          <div class="name_column">{{ column.title }}</div>
+          <div class="name_column counter_items">{{ column.cardItems.length }}</div>
+        </div>
+        <img class="delet_column" @click="deleteColumn" src="@/assets/ic-close.svg" alt="Удалить столбец" />
       </div>
       <div v-else>
         <form @submit.prevent="onBlur">
@@ -116,8 +119,14 @@ export default {
 
 <style scoped>
 .wrap_btn {
-  width: 326px;
-  margin-left: 40px;
+  min-width: 326px;
+  margin-left: 30px;
+}
+.title_wrap {
+  display: flex;
+}
+.delet_column:hover {
+  cursor: pointer;
 }
 .card_wrapper {
   background: rgba(240, 240, 240, 0.54);
@@ -131,6 +140,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 12px;
+  justify-content: space-between;
 }
 .name_column {
   font-weight: bold;
