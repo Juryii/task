@@ -105,7 +105,7 @@ export default {
       this.updateStorage();
     },
     onSaveElement(newCard) {
-      this.columns[this.itemColumn].cardItems[this.itemIndex] = newCard;
+      this.$set(this.columns[this.itemColumn].cardItems, this.itemIndex, newCard);
       this.updateStorage();
     }
   }

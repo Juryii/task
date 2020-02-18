@@ -5,8 +5,8 @@
     </div>
     <div class="cardNameItem" @click="showModal" v-else>
       <div class="card_title">{{ newInputItemTitle }}</div>
-      <span v-if="itemElement.labelIndex" :class="'tag--' + labelss[itemElement.labelIndex].tag">{{
-        labelss[itemElement.labelIndex].name
+      <span v-if="item.labelIndex" :class="'tag--' + labelss[item.labelIndex].tag">{{
+        labelss[item.labelIndex].name
       }}</span>
       <span v-else :class="'tag--' + labelss[0].tag">{{ labelss[0].name }}</span>
       <!-- <span :style="{ 'background-color': labelss[0].color }">{{ labelss[0].name }}</span> -->
@@ -14,11 +14,11 @@
         <i class="fas fa-pen" @click="flagEditItem = [itemIndex, columnIndex]"></i>
       </div>
       <div class="user_info" v-if="item.memberIndex">
-        <div v-if="memberss[itemElement.memberIndex].avatar" class="user-avatar">
+        <div v-if="memberss[item.memberIndex].avatar" class="user-avatar">
           <img src="@/assets/resistance.jpg" alt="Аватар" />
         </div>
-        <div v-else class="user-avatar user-avatar--text">{{ memberss[itemElement.memberIndex].name[0] }}</div>
-        <div class="user-name-text">{{ memberss[itemElement.memberIndex].name }}</div>
+        <div v-else class="user-avatar user-avatar--text">{{ memberss[item.memberIndex].name[0] }}</div>
+        <div class="user-name-text">{{ memberss[item.memberIndex].name }}</div>
       </div>
       <div class="user_info" v-else>
         <div class="user-avatar user-avatar--text">U</div>
